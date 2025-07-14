@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For Ayesha</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+    }
+
+    .music-player {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.9);
+      color: #222;
+      padding: 10px 20px;
+      border-radius: 15px;
+      font-family: 'Courier New', Courier, monospace;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 20px;
+      z-index: 999;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .track {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .music-player button {
+      font-size: 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #222;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.5);
+      min-height: 100vh;
+      text-align: center;
+      padding-top: 80px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 30px;
+    }
+
+    .button-container {
+      margin-bottom: 20px;
+    }
+
+    button {
+      font-size: 24px;
+      padding: 15px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 50%;
+      background-color: #ffffffcc;
+      color: #222;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+
+    .popup {
+      display: none;
+      background-color: #ffffffdd;
+      color: #222;
+      border-radius: 100px 100px 0 0;
+      width: 75%;
+      margin: 20px auto;
+      padding: 25px;
+      font-size: 16px;
+      overflow-y: auto;
+      max-height: 80vh;
+    }
+
+    .fadein {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <audio id="bgm" loop>
+    <source src="kesukaan lu.mp3" type="audio/mpeg">
+    Browser kamu tidak mendukung audio element.
+  </audio>
+
+  <audio id="hindia-audio">
+    <source src="Hindia - everything u are.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="music-player">
+    <div class="track">
+      <strong>Perunggu</strong> – <em>Berhasil</em>
+      <button id="togglePlay">▶️</button>
+    </div>
+    <div class="track">
+      <strong>Hindia</strong> – <em>everything u are</em>
+      <button id="toggleHindia">▶️</button>
+    </div>
+  </div>
+
+  <div class="overlay">
+    <h1>✨ Hi Ayeshaaa akhirnya lu masuk juga kesini ✨</h1>
+    <div class="button-container">
+      <button onclick="showPopup('A')">🙏</button>
+      <button onclick="showPopup('B')">🙇‍♂️</button>
+      <button onclick="showPopup('C')">💭</button>
+    </div>
+
+    <div id="popup-A" class="popup">
+      <p>Sheryl Ayesha Hanafiah or ayesha, i dont even know how to start this right like you’re not even trying to be anything and somehow that makes you everything ...</p>
+    </div>
+
+    <div id="popup-B" class="popup">
+      <p>I apologize for my behavior, I said things I shouldn’t have ...</p>
+    </div>
+
+    <div id="popup-C" class="popup">
+      <p>Untuk Sheryl Ayesha Hanafiah dengan tanggal lahir 14 April 2006 ...</p>
+    </div>
+  </div>
+
+  <script>
+    function showPopup(id) {
+      const ids = ['A', 'B', 'C'];
+      ids.forEach(letter => {
+        const popup = document.getElementById('popup-' + letter);
+        if (popup) {
+          popup.style.display = (letter === id) ? 'block' : 'none';
+          if (letter === id) popup.classList.add('fadein');
+          else popup.classList.remove('fadein');
+        }
+      });
+    }
+
+    const togglePlay = document.getElementById('togglePlay');
+    const toggleHindia = document.getElementById('toggleHindia');
+    const bgm = document.getElementById('bgm');
+    const hindiaAudio = document.getElementById('hindia-audio');
+
+    togglePlay.addEventListener('click', () => {
+      if (bgm.paused) {
+        bgm.play();
+        togglePlay.textContent = '⏸️';
+      } else {
+        bgm.pause();
+        togglePlay.textContent = '▶️';
+      }
+    });
+
+    toggleHindia.addEventListener('click', () => {
+      if (hindiaAudio.paused) {
+        hindiaAudio.play();
+        toggleHindia.textContent = '⏸️';
+      } else {
+        hindiaAudio.pause();
+        toggleHindia.textContent = '▶️';
+      }
+    });
+
+    document.addEventListener('click', () => {
+      if (bgm.paused || bgm.muted) {
+        bgm.muted = false;
+        bgm.play().catch(e => console.log("Autoplay blocked:", e));
+      }
+    });
+  </script>
+</body>
+</html>
